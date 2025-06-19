@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="/style/cprover2.css">
+  <title>EBMC: The Enhanced Bounded Model Checker</title>
+</head>
+
+<body>
+
+<div id="container">
+<div id="content">
+
+<style type="text/css" media="screen">
+#editor {
+}
+</style>
+
+<style>
+#refresh {
+  font-family: 'Lucida Sans Unicode';
+  cursor: pointer;
+}
+#refresh:hover {
+  color: #ff3333;
+  text-shadow: 0 0 10px #000000;
+}
+</style>
+
+<h1>
+EBMC on the Web
+</h1>
+
+<p>EBMC is free, open-source. Download <a href="/ebmc/">here</a>.</p>
+
+<form>
+  <label for="cars">Select an example:</label>
+  <select name="example" id="select_example" onchange="selectExampleChanged()">
+    <option value="counter1">32-bit counter</option>
+    <option value="gray">Gray counter</option>
+    <option value="riscv-alu">RISC-V ALU</option>
+    <option value="blank">blank</option>
+  </select>
+</form>
+
+<div id="editor" style="height: 50vh; width: 700px; border-width: 1px 1px 0px 1px; border-style: solid;">
+</div>
+
+<script src="ace.js"></script>
+
+<div id="buttons" style="width: 700px; border: 1px solid black;">
+Initializing
+</div>
+
+<div id="properties" style="width: 700px; border: 1px solid black;">
+</div>
+
+<p id="output" style='font-size: 8px; line-height: 10px; padding-top: 1em; color: #888888;'></p>
+
+<script src="ebmc-on-the-web.js"></script>
+
+</div> <!-- content -->
+</div> <!-- container -->
+
+<script src="/style/common.js" type="text/javascript"></script>
+
+<script type="text/javascript" async="false">
+var contents = `
+<h1>Quick Links</h1>
+<ul>
+<li><a href="http://www.kroening.com/">Daniel Kroening</a></li>
+<li><a href="/ebmc/manual/">Manual</a></li>
+<li><a href="http://github.com/diffblue/hw-cbmc">Github page</a></li>
+</ul>
+`;
+sidebarContent.innerHTML = contents + sidebarContent.innerHTML;
+</script>
+
+</body>
+
+</html>
+

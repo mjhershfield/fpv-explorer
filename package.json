@@ -1,0 +1,36 @@
+{
+  "name": "fpv-explorer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
+  },
+  "devDependencies": {
+    "@skeletonlabs/skeleton": "^3.1.3",
+    "@skeletonlabs/skeleton-svelte": "^1.2.3",
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tailwindcss/forms": "^0.5.9",
+    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/vite": "^4.0.0",
+    "@tsconfig/svelte": "^5.0.4",
+    "phosphor-svelte": "^3.0.1",
+    "svelte": "^5.28.1",
+    "svelte-check": "^4.1.6",
+    "tailwindcss": "^4.0.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@lucide/svelte": "^0.517.0",
+    "ace-builds": "^1.42.0",
+    "clsx": "^2.1.1",
+    "paneforge": "^1.0.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwind-variants": "^1.0.0",
+    "tw-animate-css": "^1.3.4"
+  }
+}
