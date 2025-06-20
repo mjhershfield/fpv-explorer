@@ -7,8 +7,8 @@ import Editor from './Editor.svelte';
 import Surfer from './Surfer.svelte';
 import { defaultExample, defaultVcd } from "./rtl.js";
 
-let editor;
-let surfer;
+let editor = $state();
+let surfer = $state();
 let property_list = $state([]);
 let bound = $state(10);
 

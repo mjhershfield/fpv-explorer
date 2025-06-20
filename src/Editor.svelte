@@ -1,7 +1,7 @@
 <script>
-    import ace from "ace-builds/src-min/ace.js";
-    import "ace-builds/src-min/mode-verilog.js";
-    import "ace-builds/src-min/theme-gruvbox.js"
+    import ace from "ace-builds/src-noconflict/ace.js";
+    import "ace-builds/src-noconflict/mode-verilog.js";
+    import "ace-builds/src-noconflict/theme-gruvbox.js"
 
 	let { editor = $bindable()} = $props();
 

@@ -1,13 +1,4 @@
 <script>
-    /**
-    window.wasmBindings.inject_message(JSON.stringify({
-              LoadFromData: [
-                 Array.from(encoder.encode(defaultVcd)),{keep_variables: false, keep_unavailable: false}
-              ]
-          }
-      ))
-     **/
-
     import init, * as bindings from './surfer-843a90cae0b7c1cc.js';
 
     //window.wasmBindings = bindings;
@@ -34,27 +25,10 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#404040">
-<link rel="modulepreload" href="./surfer/surfer-843a90cae0b7c1cc.js">
 <link rel="preload" href="./surfer/surfer-843a90cae0b7c1cc_bg.wasm" crossorigin=anonymous integrity="sha384-X4PH2AIwOjEvLkmR6x2wtMaAYNA9BfvKlxdVAF0KmCm3lNDOTNEVopH6Foh9SPqI" as="fetch" type="application/wasm">
 <link rel="script" href = "./surfer/integration.js">
 
     <style>
-
-        body {
-            /* Light mode background color for what is not covered by the egui canvas,
-            or where the egui canvas is translucent. */
-            background: #909090;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                /* Dark mode background color for what is not covered by the egui canvas,
-                or where the egui canvas is translucent. */
-                background: #404040;
-            }
-        }
-
-        /* Allow canvas to fill entire web page: */
 
         /* Make canvas fill entire document: */
         canvas {
@@ -63,50 +37,6 @@
             display: block;
             width: 100%;
             height: 100%;
-        }
-
-        .centered {
-            margin-right: auto;
-            margin-left: auto;
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #f0f0f0;
-            font-size: 24px;
-            font-family: Ubuntu-Light, Helvetica, sans-serif;
-            text-align: center;
-        }
-
-        /* ---------------------------------------------- */
-        /* Loading animation from https://loading.io/css/ */
-        .lds-dual-ring {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-        }
-
-        .lds-dual-ring:after {
-            content: " ";
-            display: block;
-            width: 24px;
-            height: 24px;
-            margin: 0px;
-            border-radius: 50%;
-            border: 3px solid #fff;
-            border-color: #fff transparent #fff transparent;
-            animation: lds-dual-ring 1.2s linear infinite;
-        }
-
-        @keyframes lds-dual-ring {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
         }
 
         #error_container {
