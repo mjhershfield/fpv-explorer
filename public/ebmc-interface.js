@@ -71,7 +71,7 @@ function ebmcVerify(bound) {
     modulePrint = function (text) { stdout += text + '\n'; };
     modulePrintErr = function (text) { stderr += text + '\n'; };
     let callMain = Module['callMain'];
-    let exit_code = callMain(["module.sv", "--json-result", "result.json", "--bound", bound.toString()]);
+    let exit_code = callMain(["module.sv", "--json-result", "result.json", "--bound", bound.toString(), "--reset", "rst==1"]);
     let result_text = FS.readFile('result.json', { encoding: 'utf8' });
     let results = JSON.parse(result_text);
     return { properties: results.properties, stdout: stdout, stderr: stderr };

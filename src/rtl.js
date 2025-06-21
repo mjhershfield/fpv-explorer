@@ -1,10 +1,35 @@
 export const defaultExample =
-`module main(input clk);
-  reg [31:0] data = 1;
-  always_ff @(posedge clk) data++;
-  p0: assert property (@(posedge clk) data != 5);
-endmodule
-`;
+`module fsm (
+    input logic clk,
+    input logic rst,
+    input logic en
+);
+
+    typedef enum logic[1:0] {
+        STATE_1,
+        STATE_2,
+        STATE_3
+    } state_t;
+
+    state_t state_r;
+
+    always_ff @(posedge clk or posedge rst) begin
+        if (rst) begin
+            state_r <= STATE_1;
+        end else begin
+            if (en) begin
+                case (state_r)
+                    STATE_1: state_r <= STATE_2;
+                    STATE_2: state_r <= STATE_3;
+                    STATE_3: state_r <= STATE_1;
+                endcase
+            end
+        end
+    end
+
+    a0: assert property (@(posedge clk) disable iff (rst) state_r != STATE_3);
+    c0: cover property (@(posedge clk) rst == 0 ##1 $stable(state_r));
+endmodule`;
 
 export const defaultVcd =
 `$date
