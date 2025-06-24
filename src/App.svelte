@@ -12,6 +12,8 @@ let editor = $state();
 let surfer = $state();
 let property_list = $state([]);
 let bound = $state(10);
+let show_wave = $state(false);
+let syntax_errors = $state(false);
 
 window.WaveSkin = skin;
 const worker = new Worker('ebmc-worker.js');
@@ -40,11 +42,16 @@ worker.onmessage = function (e) {
 function status_emoji(status) {
     if (status == null) {
         return "⏳";
-    } else if (status == "REFUTED") {
+    } else if (status.startsWith("REFUTED")) {
         return "❌";
-    } else {
+    } else if (status.startsWith("PROVED")) {
         return "✅";
+    } else if (status.startsWith("ASSUMED")) {
+        return "ℹ️";
+    } else {
+        return "❔";
     }
+
 }
 
 function version_response(data) {
@@ -61,12 +68,16 @@ function properties_response(data) {
         console.log("properties read: ", data.properties);
         // update properties shown on the UI. use 'identifier' for tracking properties, and
         // 'name' and 'description' for property showing. Also have a status from verification phase
+        syntax_errors = false;
         property_list = data.properties;
+        document.getElementById("prop_table_pane").style.overflowY = "scroll";
         // TIME TO VERIFY
         worker.postMessage({ kind: "Verify", bound: bound });
     } else {
         console.log("syntax errors just dropped: ", data.errors);
         editor.getSession().setAnnotations(data.errors);
+        property_list = [];
+        syntax_errors = true;
     }
 }
 
@@ -87,6 +98,7 @@ function verify_response(data) {
 function run_ebmc() {
     console.log("running ebmc");
     worker.postMessage({ kind: "Properties", text: editor.getValue() });
+    show_wave = false;
 }
 
 function ebmc_trace_to_wavejson(prop) {
@@ -142,25 +154,26 @@ function ebmc_trace_to_wavejson(prop) {
 
     // Handle clk
     let clk = wavejson.signal.find((e)=> e.name == "clk");
-    clk.wave = "P".padEnd(trace.states.length, ".");
+    if (clk != null)
+        clk.wave = "P".padEnd(trace.states.length, ".");
 
     // For safety, add one more cycle to the end of the sim
     for (const signal of trace.states[0]) {
         let json_sig = wavejson.signal.find((e)=> e.name == signal.base_name);
-        if (json_sig.name == "clk") json_sig.wave += "l";
-        else json_sig.wave += ".";
+        if (json_sig.name == "clk") json_sig.wave += ".";
+        else json_sig.wave += "x";
     }
 
     // Delete signals that are constant for the whole time
         for (const signal of trace.states[0]) {
             let json_sig = wavejson.signal.find((e)=> e.name == signal.base_name);
-            if (json_sig.name[0].toUpperCase() == json_sig.name[0]) {
+            if (json_sig.name[0] == "_" || json_sig.name[0].toUpperCase() == json_sig.name[0]) {
                 wavejson.signal = wavejson.signal.filter(s => s.name != signal.base_name)
             }
         }
 
-    // Add red arrow to show failure (best guess)
-    let line_index = trace.states.length - 1;
+    // Add line to show failure cycle (best guess)
+    let line_index = trace.states.length;
     wavejson.signal.unshift({node: "".padEnd(line_index, ".")})
     wavejson.signal[0].node += "A";
     wavejson.signal.push({node: "".padEnd(line_index, ".")})
@@ -177,8 +190,10 @@ function open_waveform(prop) {
     if (prop.trace != null) {
         let current_wave = ebmc_trace_to_wavejson(prop);
         renderWaveForm(0, current_wave, "WaveDrom_Display_", false);
+        show_wave = true;
     } else {
         console.log("no wave for proved")
+        show_wave = false;
     }
 }
 
@@ -201,7 +216,7 @@ function open_waveform(prop) {
             <PaneResizer class="bg-background relative flex items-center justify-center">
                 <DotsSixVertical color="white" size={20} weight="bold" />
             </PaneResizer>
-            <Pane defaultSize={30}>
+            <Pane defaultSize={30} id="prop_table_pane">
                 <div class="table-wrap">
                     <table class="table caption-bottom">
                         <thead>
@@ -222,6 +237,9 @@ function open_waveform(prop) {
                     </tbody>
                     </table>
                 </div>
+                {#if syntax_errors}
+                    <p>Check for syntax errors in the editor.</p>
+                {/if}
             </Pane>
         </PaneGroup>
     </Pane>
@@ -229,7 +247,11 @@ function open_waveform(prop) {
         <DotsSix color="white" size={20} weight="bold" />
     </PaneResizer>
     <Pane defaultSize={30}>
-        <div id="WaveDrom_Display_0"></div>
+        <div class="overflow-auto">
+            <div id="WaveDrom_Display_0" class={show_wave ? "" : "hidden"}></div>
+            {#if !show_wave}
+                <p>No wave currently selected</p>
+            {/if}
+        </div>
     </Pane>
 </PaneGroup>
-

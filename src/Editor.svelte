@@ -24,7 +24,7 @@
     };
 </script>
 
-<div id="editor" use:init_editor class="m-0 w-full h-full"></div>
+<div id="editor" use:init_editor class="m-0 w-full h-9/10"></div>
 
 <style type="text/css" media="screen">
 

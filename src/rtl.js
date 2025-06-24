@@ -8,7 +8,8 @@ export const defaultExample =
     typedef enum logic[1:0] {
         STATE_1,
         STATE_2,
-        STATE_3
+        STATE_3,
+        STATE_4
     } state_t;
 
     state_t state_r;
@@ -29,7 +30,10 @@ export const defaultExample =
 
     a0: assert property (@(posedge clk) disable iff (rst) state_r != STATE_3);
     c0: cover property (@(posedge clk) rst == 0 ##1 $stable(state_r));
-endmodule`;
+    c1: cover property (@(posedge clk) rst == 0 && state_r == STATE_4);
+    endmodule
+
+`;
 
 export const defaultVcd =
 `$date
