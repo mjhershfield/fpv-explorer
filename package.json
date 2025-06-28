@@ -1,13 +1,20 @@
 {
   "name": "fpv-explorer",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "homepage": {
+    "name": "fpv-explorer",
+    "version": "0.1.0",
+    "homepage": "https://mjhershfield.github.io/fpv-explorer",
+    "private": false
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
     "@skeletonlabs/skeleton": "^3.1.3",
@@ -17,6 +24,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@tailwindcss/vite": "^4.0.0",
     "@tsconfig/svelte": "^5.0.4",
+    "gh-pages": "^6.3.0",
     "phosphor-svelte": "^3.0.1",
     "svelte": "^5.28.1",
     "svelte-check": "^4.1.6",

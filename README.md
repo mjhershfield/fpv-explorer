@@ -13,15 +13,16 @@ and can be statically hosted. FPV Explorer is built upon the following awesome o
 - [OpenMoji](https://openmoji.org/) for the site's favicon
 
 ## Get Started
-If you want to try out FPV Explorer for yourself, it is currently hosted at
-[my UF static hosting](https://cise.ufl.edu/~mhershfield/fpv-explorer/). This may be migrated to
-GitHub Pages in the future.
+If you want to try out FPV Explorer for yourself, it is currently hosted on
+[GitHub Pages](https://mjhershfield.github.io/fpv-explorer/).
 
 If you want to build/host FPV Explorer yourself, you just need NPM.
 ```sh
 npm i
 npm run build
 cp -r dist/* your_public_html/
+# or, if you modify the package.json deployment information,
+npm run deploy
 ```
 
 ## Current Bugs and Limitations
@@ -34,3 +35,4 @@ high schoolers about formal verification. As such, it is in its MVP phase and ha
     output is not handled gracefully or displayed to the user
 - Changing the zoom on the site can cause UI elements to become unviewable
 - Some platforms are unable to see the syntax error markers in the ACE editor
+
