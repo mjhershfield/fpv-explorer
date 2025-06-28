@@ -164,6 +164,16 @@ function ebmc_trace_to_wavejson(prop) {
         else json_sig.wave += "x";
     }
 
+    // Convert binary literals to decimal
+    for (const signal of trace.states[0]) {
+        let json_sig = wavejson.signal.find((e)=> e.name == signal.base_name);
+        for (let i = 0; i < json_sig.data.length; i++) {
+            if (json_sig.data[i].includes("'b")) {
+                json_sig.data[i] = parseInt(json_sig.data[i].split("b")[1], 2) ;
+            }
+        }
+    }
+
     // Delete signals that are constant for the whole time
         for (const signal of trace.states[0]) {
             let json_sig = wavejson.signal.find((e)=> e.name == signal.base_name);
